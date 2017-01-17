@@ -1,0 +1,5 @@
+- background (layout e butões)
+- sons
+- selecionar tempo
+- selecionar dificuldade (número de butões, mais operações aritméticas, uma ia que seleciona respostas erradas mais 	proximas da resposta certa)
+- melhorar a tela de boas vindas(GO!)
