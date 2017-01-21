@@ -10,16 +10,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.victorcruz.appbraintrainer.MainActivity">
 
-    <Button
-        android:text="GO!"
-        android:id="@+id/startButton"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:background="@android:color/holo_green_light"
-        android:visibility="visible"
-        android:onClick="start" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainRelativeLayout">
+
+        <Button
+            android:text="Options"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/startButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:onClick="openOptions"
+            android:id="@+id/optionsButton"/>
+
+        <Button
+            android:text="GO!"
+            android:id="@+id/startButton"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:background="@android:color/holo_green_light"
+            android:visibility="visible"
+            android:onClick="start" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/optionsRelativeLayout"
+        android:visibility="invisible">
+
+        <TextView
+            android:text="Set timer: 30s/90s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsTimerTextView"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsTimerSeekBar"
+            android:layout_below="@+id/optionsTimerTextView"
+            android:max="80"
+            android:progress="20"/>
+
+        <Button
+            android:text="Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsBackButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="backFromOptions"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -42,17 +89,6 @@
             android:background="@android:color/holo_orange_dark"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
-
-        <Button
-            android:text="Play Again!"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="39dp"
-            android:id="@+id/playAgainButton"
-            android:visibility="invisible"
-            android:onClick="reset" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,5 +169,26 @@
             android:layout_marginBottom="13dp"
             android:layout_centerHorizontal="true"
             android:visibility="invisible" />
+
+        <Button
+            android:text="Play Again!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playAgainButton"
+            android:visibility="invisible"
+            android:onClick="reset"
+            android:layout_above="@+id/backFromGameButton"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:text="Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backFromGameButton"
+            android:onClick="backFromGame"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="false"
+            />
+
     </RelativeLayout>
 </RelativeLayout>

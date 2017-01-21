@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,13 +16,16 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startButton, playAgainButton, button1, button2, button3, button4;
-    private TextView questionTextView, scoreTextView, messageTextView, timerTextView;
-    private RelativeLayout gameRelativeLayout;
+    private Button startButton, optionsButton, backFromGameButton, playAgainButton, button1, button2, button3, button4;
+    private TextView optionsTimerTextView, questionTextView, scoreTextView, messageTextView, timerTextView;
+    private RelativeLayout mainRelativeLayout, gameRelativeLayout, optionsRelativeLayout;
+    private SeekBar optionsTimerSeekBar;
+    private CountDownTimer countDownTimer;
 
     private Random random;
 
-    private int rightAnswer,
+    private int timerValue = 30000,
+                rightAnswer,
                 totalAnswer,
                 correctAnswer,
                 locationOfCorrectAnswer,
@@ -32,11 +37,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void openOptions(View view){
 
+        mainRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
+        optionsRelativeLayout.setVisibility(RelativeLayout.VISIBLE);
+
+    }
+
+    public void backFromOptions(View view){
+
+        optionsRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
+        mainRelativeLayout.setVisibility(RelativeLayout.VISIBLE);
+
+    }
+
+    public void backFromGame(View view) {
+
+        countDownTimer.cancel();
+        gameRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
+        mainRelativeLayout.setVisibility(RelativeLayout.VISIBLE);
+
+    }
 
     public void start(View view){
 
-        startButton.setVisibility(View.INVISIBLE);
+        mainRelativeLayout.setVisibility(RelativeLayout.INVISIBLE);
         gameRelativeLayout.setVisibility(RelativeLayout.VISIBLE);
 
         reset(view);
@@ -122,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTimer(){
-        new CountDownTimer(30100, 1000) {
+        countDownTimer = new CountDownTimer(timerValue + 100, 1000) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -179,7 +204,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startButton = (Button) findViewById(R.id.startButton);
+        mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
+        //startButton = (Button) findViewById(R.id.startButton);
+        //optionsButton = (Button) findViewById(R.id.optionsButton);
+        optionsRelativeLayout = (RelativeLayout) findViewById(R.id.optionsRelativeLayout);
+        optionsTimerTextView = (TextView) findViewById(R.id.optionsTimerTextView);
+        optionsTimerSeekBar = (SeekBar) findViewById(R.id.optionsTimerSeekBar);
         gameRelativeLayout = (RelativeLayout) findViewById(R.id.gameUI);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         questionTextView = (TextView) findViewById(R.id.question);
@@ -190,7 +220,30 @@ public class MainActivity extends AppCompatActivity {
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
         playAgainButton = (Button) findViewById(R.id.playAgainButton);
+        //backFromGameButton = (Button) findViewById(R.id.backFromGameButton);
         random = new Random();
 
+        optionsTimerSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress = progress + 10;
+                timerValue = progress * 1000;
+                if (seekBar == optionsTimerSeekBar) optionsTimerTextView.setText("Set timer: " + progress + "s/90s");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
     }
+
+
+
 }
