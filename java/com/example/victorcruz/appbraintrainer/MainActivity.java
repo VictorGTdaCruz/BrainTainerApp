@@ -1,14 +1,18 @@
 package com.example.victorcruz.appbraintrainer;
 
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,15 +20,20 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button startButton, optionsButton, backFromGameButton, playAgainButton, button1, button2, button3, button4;
+    private Button startButton, optionsButton, optionsSpinnerSetTheme, backFromGameButton, playAgainButton, button1, button2, button3, button4;
     private TextView optionsTimerTextView, questionTextView, scoreTextView, messageTextView, timerTextView;
     private RelativeLayout mainRelativeLayout, gameRelativeLayout, optionsRelativeLayout;
     private SeekBar optionsTimerSeekBar;
     private CountDownTimer countDownTimer;
+    private Spinner optionsThemeSpinner;
+
+    private SharedPreferences sharedPreferences;
 
     private Random random;
 
-    private int timerValue = 30000,
+    private int theme,
+                spinnerSelectedTheme = 2,
+                timerValue = 30000,
                 rightAnswer,
                 totalAnswer,
                 correctAnswer,
@@ -199,17 +208,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void setThemeButton(View view){
+
+        if (spinnerSelectedTheme != theme) {
+            sharedPreferences.edit().putInt("theme", spinnerSelectedTheme).apply();
+            recreate();
+        } else Toast.makeText(this, "Você já está usando esse tema!", Toast.LENGTH_SHORT).show();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPreferences = this.getSharedPreferences("com.example.victorcruz.appbraintrainer", MODE_PRIVATE);
+        theme = sharedPreferences.getInt("theme", 1);
+
+        /*
+            1 = Padrão
+            2 = personalizado
+            3 = cru
+         */
+
+        if (theme == 2 || theme == 3) setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
+
         setContentView(R.layout.activity_main);
 
         mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
-        //startButton = (Button) findViewById(R.id.startButton);
+        startButton = (Button) findViewById(R.id.startButton);
         //optionsButton = (Button) findViewById(R.id.optionsButton);
         optionsRelativeLayout = (RelativeLayout) findViewById(R.id.optionsRelativeLayout);
         optionsTimerTextView = (TextView) findViewById(R.id.optionsTimerTextView);
         optionsTimerSeekBar = (SeekBar) findViewById(R.id.optionsTimerSeekBar);
+        optionsThemeSpinner = (Spinner) findViewById(R.id.optionsThemeSpinner);
+        //optionsSpinnerSetTheme = (Button) findViewById(R.id.optionsSpinnerSetTheme);
         gameRelativeLayout = (RelativeLayout) findViewById(R.id.gameUI);
         timerTextView = (TextView) findViewById(R.id.timerTextView);
         questionTextView = (TextView) findViewById(R.id.question);
@@ -219,9 +251,33 @@ public class MainActivity extends AppCompatActivity {
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
+        if (theme == 2) {
+
+            startButton.setBackgroundColor(startButton.getContext().getResources().getColor(android.R.color.holo_green_light, null));
+            button1.setBackgroundColor(button1.getResources().getColor(android.R.color.holo_blue_bright, null));
+            button2.setBackgroundColor(button2.getResources().getColor(R.color.colorAccent, null));
+            button3.setBackgroundColor(button3.getResources().getColor(android.R.color.holo_green_light, null));
+            button4.setBackgroundColor(button4.getResources().getColor(R.color.colorPrimary, null));
+            scoreTextView.setBackgroundColor(scoreTextView.getResources().getColor(android.R.color.holo_orange_dark, null));
+
+        }
         playAgainButton = (Button) findViewById(R.id.playAgainButton);
         //backFromGameButton = (Button) findViewById(R.id.backFromGameButton);
         random = new Random();
+
+
+        optionsThemeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerSelectedTheme = position + 1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         optionsTimerSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -243,7 +299,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+/*
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        spinnerSelectedTheme = Integer.parseInt(parent.getItemAtPosition(position).toString());
+        Toast.makeText(parent.getContext(), "OnItemSelectedListener: " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
-
+    }*/
 }

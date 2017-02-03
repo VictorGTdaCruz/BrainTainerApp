@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_width="300dp"
             android:layout_height="200dp"
-            android:background="@android:color/holo_green_light"
+
             android:visibility="visible"
             android:onClick="start" />
     </RelativeLayout>
@@ -42,6 +42,24 @@
         android:layout_height="match_parent"
         android:id="@+id/optionsRelativeLayout"
         android:visibility="invisible">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsThemeSpinner"
+            android:layout_below="@+id/optionsTimerSeekBar"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="21dp"
+            android:entries="@array/themes"
+            />
+
+        <Button
+            android:text="Trocar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/optionsSpinnerSetTheme"
+            android:layout_below="@+id/optionsThemeSpinner"
+            android:onClick="setThemeButton"/>
 
         <TextView
             android:text="Set timer: 30s/90s"
@@ -86,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/score"
-            android:background="@android:color/holo_orange_dark"
+
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
 
@@ -115,7 +133,7 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:background="@android:color/holo_blue_bright"
+
                 android:onClick="checkAnswer"
                 android:tag="3" />
 
@@ -128,7 +146,7 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:background="@color/colorAccent"
+
                 android:onClick="checkAnswer"
                 android:tag="2" />
 
@@ -141,7 +159,7 @@
                 android:layout_column="1"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:background="@android:color/holo_green_light"
+
                 android:onClick="checkAnswer"
                 android:tag="1" />
 
@@ -154,7 +172,7 @@
                 android:layout_column="0"
                 android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                android:background="@color/colorPrimary"
+
                 android:onClick="checkAnswer"
                 android:tag="0" />
 
@@ -192,3 +210,12 @@
 
     </RelativeLayout>
 </RelativeLayout>
+
+
+    <!-- android:background="@android:color/holo_green_light"
+        android:background="@android:color/holo_blue_bright"
+        android:background="@color/colorAccent"
+        android:background="@android:color/holo_green_light"
+        android:background="@color/colorPrimary"
+        score = android:background="@android:color/holo_orange_dark"
+        -->

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">App Brain Trainer</string>
+    <string-array name="themes">
+        <item>Padrão</item>
+        <item>Personalizado</item>
+        <item>Cru</item>
+    </string-array>
 </resources>
